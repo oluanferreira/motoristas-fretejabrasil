@@ -1,42 +1,44 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#171615">
+<meta name="theme-color" content="#1a73e8">
 <title>Seja motorista Frete Já</title>
 <style>
 *{margin:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:#171615;color:#f5efe6;min-height:100vh}
-.wrap{max-width:480px;margin:auto;padding:28px 20px 60px}
-.brand{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.mark{width:40px;height:40px;border-radius:12px;background:#ff7a59;color:#171615;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:22px}
-.brand small{color:#a89f91;display:block;font-size:12px}
-h1{font-size:30px;font-style:italic;margin:14px 0 6px}
-h1 span{color:#ff7a59;font-style:normal}
-.lead{color:#a89f91;font-size:14px;line-height:1.6;margin-bottom:20px}
-.steps{display:flex;gap:6px;margin-bottom:22px}
-.steps i{flex:1;height:4px;border-radius:4px;background:#3a332c}
-.steps i.on{background:#ff7a59}
-.card{background:#211e1b;border:1px solid #3a332c;border-radius:18px;padding:22px 18px}
-.card h2{font-size:19px;margin-bottom:4px}
-.card p.hint{color:#a89f91;font-size:13px;margin-bottom:16px}
-label{display:block;font-size:13px;color:#cfc6b8;margin-bottom:12px}
-label small{color:#8a8175}
-input,select{width:100%;margin-top:6px;background:#171615;border:1px solid #3a332c;border-radius:12px;color:#f5efe6;font-size:16px;padding:14px 12px}
-input:focus,select:focus{outline:none;border-color:#ff7a59}
+body{background:#F5F5F5;color:#202425;min-height:100vh}
+.hero{background:#1a73e8;color:#fff;padding:30px 20px 60px}
+.hero-in{max-width:480px;margin:auto}
+.hero small{font-size:12px;letter-spacing:2px;opacity:.85}
+.hero h1{font-size:30px;margin:8px 0 6px}
+.hero p{font-size:14px;opacity:.92}
+.wrap{max-width:480px;margin:-34px auto 0;padding:0 16px 60px}
+.steps{display:flex;gap:6px;margin-bottom:16px}
+.steps i{flex:1;height:4px;border-radius:4px;background:#dadce0}
+.steps i.on{background:#f9ab00}
+.card{background:#fff;border-radius:18px;padding:22px 18px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.card h2{font-size:19px;color:#1a73e8}
+.card p.hint{color:#5f6368;font-size:13px;margin:4px 0 16px}
+label{display:block;font-size:13px;font-weight:bold;color:#323232;margin-bottom:12px}
+input,select{width:100%;margin-top:6px;background:#fff;border:1.5px solid #dadce0;border-radius:12px;color:#202425;font-size:16px;padding:14px 12px;font-weight:normal}
+input:focus,select:focus{outline:none;border-color:#1a73e8}
 .row{display:flex;gap:10px}.row label{flex:1}
-.err{color:#ff9a8a;font-size:13px;min-height:20px;margin:2px 0 8px}
-.btn{width:100%;border:none;border-radius:999px;padding:16px;font-size:16px;font-weight:800;margin-top:6px;cursor:pointer}
-.primary{background:#ff7a59;color:#171615}
-.ghost{background:transparent;color:#cfc6b8;border:1px solid #3a332c;margin-top:10px}
-.photo{border:2px dashed #3a332c;border-radius:14px;padding:26px 14px;text-align:center;color:#a89f91;font-size:14px;cursor:pointer}
-.photo.ok{border-color:#4caf6d;color:#7fe0a0}
-.review{background:#171615;border:1px solid #3a332c;border-radius:12px;padding:14px;font-size:14px;line-height:2}
+.err{color:#d93025;font-size:13px;min-height:20px;margin:2px 0 8px}
+.btn{width:100%;border:none;border-radius:14px;padding:16px;font-size:16px;font-weight:800;margin-top:6px;cursor:pointer}
+.primary{background:#1a73e8;color:#fff}
+.accent{background:#f9ab00;color:#202425}
+.ghost{background:transparent;color:#1a73e8;border:1.5px solid #dadce0;margin-top:10px}
+.photo{border:2px dashed #dadce0;border-radius:14px;padding:26px 14px;text-align:center;color:#5f6368;font-size:14px;cursor:pointer;background:#fafafa}
+.photo.ok{border-color:#1a73e8;color:#1a73e8}
+.review{background:#FFF3E0;border-radius:12px;padding:14px;font-size:14px;line-height:2;color:#202425}
 .ok-screen{text-align:center;padding:30px 0}
 .ok-screen .big{font-size:64px}
 .hidden{display:none}
-</style></head><body><div class="wrap">
-<div class="brand"><div class="mark">F</div><div><strong>Frete Já</strong><small>motoristas</small></div></div>
-<h1>Dirija com a <span>Frete Já</span></h1>
-<p class="lead">Cadastre-se em 1 minuto. Aprovamos rapidinho e você já começa a receber corridas.</p>
+</style></head><body>
+<div class="hero"><div class="hero-in">
+<small>FRETE JÁ · MOTORISTAS</small>
+<h1>Dirija e ganhe com a Frete Já</h1>
+<p>Cadastre-se em 1 minuto. Aprovamos rapidinho e as corridas começam a chegar.</p>
+</div></div>
+<div class="wrap">
 <div class="steps"><i id="s1" class="on"></i><i id="s2"></i><i id="s3"></i></div>
 
 <div class="card" id="step1">
@@ -50,7 +52,7 @@ input:focus,select:focus{outline:none;border-color:#ff7a59}
 </div>
 
 <div class="card hidden" id="step2">
-<h2>Seu veículo</h2><p class="hint">O que você vai rodar.</p>
+<h2>Seu veículo</h2><p class="hint">Com o que você vai rodar.</p>
 <label>Placa<input id="f_placa" placeholder="ABC1D23" style="text-transform:uppercase"></label>
 <div class="row">
 <label>Modelo<input id="f_modelo" placeholder="Ex: Fiorino"></label>
@@ -70,12 +72,12 @@ input:focus,select:focus{outline:none;border-color:#ff7a59}
 </div>
 
 <div class="card hidden" id="step3">
-<h2>Foto da CNH</h2><p class="hint">Tire uma foto nítida do documento aberto.</p>
+<h2>Foto da CNH</h2><p class="hint">Foto nítida do documento aberto.</p>
 <div class="photo" id="photoBox" onclick="document.getElementById('f_foto').click()">📷 Toque para anexar a foto da CNH</div>
 <input type="file" id="f_foto" accept="image/*" capture="environment" hidden>
 <div class="review" id="review" style="margin-top:14px"></div>
 <div class="err" id="e3"></div>
-<button class="btn primary" id="btnSend" onclick="sendAll()">Enviar cadastro</button>
+<button class="btn accent" id="btnSend" onclick="sendAll()">Enviar cadastro</button>
 <button class="btn ghost" onclick="goStep(2)">Voltar</button>
 </div>
 
