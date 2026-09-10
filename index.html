@@ -130,7 +130,7 @@ async function sendAll(){
     if(up.error)throw up.error;
     const ins=await sb.from("frete_drivers").insert({name:$("f_nome").value.trim(),cpf:digits($("f_cpf").value),cnh:digits($("f_cnh").value),phone:digits($("f_fone").value),plate:$("f_placa").value.toUpperCase().trim(),vehicle_model:$("f_modelo").value.trim(),vehicle_year:$("f_ano").value.trim(),body_type:$("f_carroceria").value,cnh_photo_url:path});
     if(ins.error)throw ins.error;
-    fetch("http://freteja.i5x.com.br/api/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("f_nome").value.trim(),email:$("f_email").value.trim(),phone:digits($("f_fone").value),password:$("f_senha").value,role:"motorista",cpf_cnpj:digits($("f_cpf").value)})}).catch(()=>{});
+    fetch("https://api.fretejabrasil.com/api/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("f_nome").value.trim(),email:$("f_email").value.trim(),phone:digits($("f_fone").value),password:$("f_senha").value,role:"motorista",cpf_cnpj:digits($("f_cpf").value)})}).catch(()=>{});
     ["step1","step2","step3"].forEach(i=>$(i).classList.add("hidden"));
     document.querySelectorAll(".steps i").forEach(i=>i.classList.add("on"));
     $("done").classList.remove("hidden");window.scrollTo(0,0);
