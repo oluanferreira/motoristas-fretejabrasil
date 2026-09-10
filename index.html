@@ -55,12 +55,20 @@ input:focus,select:focus{outline:none;border-color:#1a73e8}
 
 <div class="card hidden" id="step2">
 <h2>Seu veículo</h2><p class="hint">Com o que você vai rodar.</p>
+<label>Tipo de veículo<select id="f_tipo" onchange="tipoChanged()">
+<option value="">Escolha...</option>
+<option value="moto">Moto</option>
+<option value="carro">Carro de passeio</option>
+<option value="utilitario">Utilitário</option>
+<option value="van">Van</option>
+<option value="caminhao">Caminhão</option>
+</select></label>
 <label>Placa<input id="f_placa" placeholder="ABC1D23" style="text-transform:uppercase"></label>
 <div class="row">
 <label>Modelo<input id="f_modelo" placeholder="Ex: Fiorino"></label>
 <label style="max-width:100px">Ano<input id="f_ano" inputmode="numeric" placeholder="2020"></label>
 </div>
-<label>Tipo de carroceria<select id="f_carroceria">
+<label id="wrap_carroc">Tipo de carroceria<select id="f_carroceria">
 <option value="">Escolha...</option>
 <option>Utilitário pequeno</option>
 <option>Furgão</option>
@@ -99,6 +107,12 @@ function maskFone(v){v=digits(v).slice(0,11);if(v.length>10)return v.replace(/(\
 $("f_cpf").oninput=e=>e.target.value=maskCPF(e.target.value);
 $("f_fone").oninput=e=>e.target.value=maskFone(e.target.value);
 $("f_foto").onchange=e=>{const f=e.target.files[0];if(f){$("photoBox").textContent="✅ "+f.name;$("photoBox").classList.add("ok");}};
+function tipoChanged(){
+  const t=$("f_tipo").value;
+  const need=!["moto","carro"].includes(t);
+  $("wrap_carroc").style.display=(t&&!need)?"none":"";
+  if(!need)$("f_carroceria").value="";
+}
 function goStep(n){
   if(n===2){
     if(!$("f_nome").value.trim())return $("e1").textContent="Informe seu nome.";
@@ -110,11 +124,15 @@ function goStep(n){
     $("e1").textContent="";
   }
   if(n===3){
+    if(!$("f_tipo").value)return $("e2").textContent="Escolha o tipo de veículo.";
     if($("f_placa").value.trim().length<7)return $("e2").textContent="Informe a placa.";
     if(!$("f_modelo").value.trim())return $("e2").textContent="Informe o modelo.";
-    if(!$("f_carroceria").value)return $("e2").textContent="Escolha a carroceria.";
+    const needCarroc=!["moto","carro"].includes($("f_tipo").value);
+    if(needCarroc&&!$("f_carroceria").value)return $("e2").textContent="Escolha a carroceria.";
     $("e2").textContent="";
-    $("review").innerHTML="<b>"+$("f_nome").value+"</b><br>"+maskCPF($("f_cpf").value)+" · "+maskFone($("f_fone").value)+"<br>"+$("f_placa").value.toUpperCase()+" · "+$("f_modelo").value+" "+$("f_ano").value+"<br>"+$("f_carroceria").value;
+    const tipoLabel=$("f_tipo").selectedOptions[0].textContent;
+    const extra=needCarroc?"<br>"+$("f_carroceria").value:"";
+    $("review").innerHTML="<b>"+$("f_nome").value+"</b><br>"+maskCPF($("f_cpf").value)+" · "+maskFone($("f_fone").value)+"<br>"+tipoLabel+" · "+$("f_placa").value.toUpperCase()+" · "+$("f_modelo").value+" "+$("f_ano").value+extra;
   }
   [1,2,3].forEach(i=>{$("step"+i).classList.toggle("hidden",i!==n);$("s"+i).classList.toggle("on",i<=n);});
   window.scrollTo(0,0);
@@ -128,7 +146,7 @@ async function sendAll(){
     const path="cnh-"+Date.now()+"-"+foto.name.replace(/\W/g,"_");
     const up=await sb.storage.from("frete-cnh").upload(path,foto);
     if(up.error)throw up.error;
-    const ins=await sb.from("frete_drivers").insert({name:$("f_nome").value.trim(),cpf:digits($("f_cpf").value),cnh:digits($("f_cnh").value),phone:digits($("f_fone").value),plate:$("f_placa").value.toUpperCase().trim(),vehicle_model:$("f_modelo").value.trim(),vehicle_year:$("f_ano").value.trim(),body_type:$("f_carroceria").value,cnh_photo_url:path});
+    const ins=await sb.from("frete_drivers").insert({name:$("f_nome").value.trim(),cpf:digits($("f_cpf").value),cnh:digits($("f_cnh").value),phone:digits($("f_fone").value),vehicle_type:$("f_tipo").value,plate:$("f_placa").value.toUpperCase().trim(),vehicle_model:$("f_modelo").value.trim(),vehicle_year:$("f_ano").value.trim(),body_type:$("f_carroceria").value||null,cnh_photo_url:path});
     if(ins.error)throw ins.error;
     fetch("https://api.fretejabrasil.com/api/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("f_nome").value.trim(),email:$("f_email").value.trim(),phone:digits($("f_fone").value),password:$("f_senha").value,role:"motorista",cpf_cnpj:digits($("f_cpf").value)})}).catch(()=>{});
     ["step1","step2","step3"].forEach(i=>$(i).classList.add("hidden"));
