@@ -47,6 +47,8 @@ input:focus,select:focus{outline:none;border-color:#1a73e8}
 <label>CPF<input id="f_cpf" inputmode="numeric" placeholder="000.000.000-00"></label>
 <label>CNH (número)<input id="f_cnh" inputmode="numeric" placeholder="00000000000"></label>
 <label>WhatsApp<input id="f_fone" inputmode="tel" placeholder="(77) 99999-9999"></label>
+<label>Email (acesso ao app)<input id="f_email" type="email" autocomplete="email" placeholder="voce@email.com"></label>
+<label>Senha do app<input id="f_senha" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres"></label>
 <div class="err" id="e1"></div>
 <button class="btn primary" onclick="goStep(2)">Continuar</button>
 </div>
@@ -103,6 +105,8 @@ function goStep(n){
     if(digits($("f_cpf").value).length!==11)return $("e1").textContent="CPF incompleto.";
     if(digits($("f_cnh").value).length<9)return $("e1").textContent="Número da CNH inválido.";
     if(digits($("f_fone").value).length<10)return $("e1").textContent="WhatsApp incompleto.";
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($("f_email").value.trim()))return $("e1").textContent="Informe um email válido.";
+    if($("f_senha").value.length<6)return $("e1").textContent="Senha com mínimo 6 caracteres.";
     $("e1").textContent="";
   }
   if(n===3){
@@ -126,6 +130,7 @@ async function sendAll(){
     if(up.error)throw up.error;
     const ins=await sb.from("frete_drivers").insert({name:$("f_nome").value.trim(),cpf:digits($("f_cpf").value),cnh:digits($("f_cnh").value),phone:digits($("f_fone").value),plate:$("f_placa").value.toUpperCase().trim(),vehicle_model:$("f_modelo").value.trim(),vehicle_year:$("f_ano").value.trim(),body_type:$("f_carroceria").value,cnh_photo_url:path});
     if(ins.error)throw ins.error;
+    fetch("http://freteja.i5x.com.br/api/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:$("f_nome").value.trim(),email:$("f_email").value.trim(),phone:digits($("f_fone").value),password:$("f_senha").value,role:"motorista",cpf_cnpj:digits($("f_cpf").value)})}).catch(()=>{});
     ["step1","step2","step3"].forEach(i=>$(i).classList.add("hidden"));
     document.querySelectorAll(".steps i").forEach(i=>i.classList.add("on"));
     $("done").classList.remove("hidden");window.scrollTo(0,0);
